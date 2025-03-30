@@ -107,7 +107,7 @@ plt.show()
 ```
 [Colab](https://colab.research.google.com/drive/1hoZNFeee6syi7Yc08jQ9eyxHDQqNKHz7?authuser=1#scrollTo=MhV99wEBVqMB)
 
-https://github.com/mirsaddoyan/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-8.png?raw=true
+[Example Image](https://github.com/mirsaddoyan/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-8.png?raw=true)
 
 
 This script:  
