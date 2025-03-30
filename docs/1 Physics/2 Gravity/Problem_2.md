@@ -132,6 +132,8 @@ plt.show()
 ```
 [Colab](https://colab.research.google.com/drive/1IqRR9KKWCAXNI3wQw8ww3D9J9YYc_tqs?authuser=1)
 
+![Example Image](https://github.com/mirsaddoyan/solutions_repo/blob/main/docs/1%20Physics/2%20Gravity/Unknown-11.png?raw=true)
+
 ### **3.2 Interpretation of Results**  
 
 - **Earth:**  
