@@ -139,7 +139,7 @@ plt.grid()
 plt.show()
 ```
 [Colab](https://colab.research.google.com/drive/1UVTQJm3-aR74L4xRO0jY-iTIrj3-3xBv?authuser=1)
-
+![Example Image](https://github.com/mirsaddoyan/solutions_repo/blob/main/docs/1%20Physics/2%20Gravity/Unknown-10.png?raw=true)
 The graph should be a straight line, confirming that **$T^2 \propto r^3$**.  
 
 ---
