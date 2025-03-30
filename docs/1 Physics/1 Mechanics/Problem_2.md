@@ -146,6 +146,8 @@ plt.show()
 ```
 [Colab](https://colab.research.google.com/drive/1fRmQYP5WkB1YjhRsynlv7aoUMijme1g1?authuser=1)
 
+![Example Image](https://github.com/mirsaddoyan/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-9.png?raw=true)
+
 ### 5.1 Phase Space and Poincaré Sections  
 
 We extend this analysis by plotting **phase portraits** (angular velocity vs. displacement) and **Poincaré sections**, which reveal transitions from periodic to chaotic motion.  
