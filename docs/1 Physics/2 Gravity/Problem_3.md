@@ -130,6 +130,8 @@ plt.show()
 ```
 [Colab](https://colab.research.google.com/drive/1YeT0Dqua7RCqWjgrzE43nqNaLbTKGAXo?authuser=1)
 
+![Example Image](https://github.com/mirsaddoyan/solutions_repo/blob/main/docs/1%20Physics/2%20Gravity/Unknown-12.png?raw=true)
+
 ---
 ### 4. Importance in Space Exploration
 
