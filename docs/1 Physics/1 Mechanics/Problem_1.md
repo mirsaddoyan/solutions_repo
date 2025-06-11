@@ -42,6 +42,30 @@ This is the key result showing how range depends on initial velocity, gravity, a
 ---
 
 ## 2. Simulation: Python Code and Visualizations
+### Range vs. Angle Plot
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+v0 = 30  # initial velocity in m/s
+g = 9.81  # gravitational acceleration in m/s^2
+angles = np.linspace(0, 90, 500)
+angles_rad = np.radians(angles)
+
+# Calculate range
+R = (v0**2 * np.sin(2 * angles_rad)) / g
+
+# Plot range vs angle
+plt.figure(figsize=(10, 6))
+plt.plot(angles, R, color='royalblue')
+plt.axvline(45, color='red', linestyle='--', label='\u03b8 = 45\xb0 (Max Range)')
+plt.title('Projectile Range vs. Launch Angle')
+plt.xlabel('Angle of Projection (degrees)')
+plt.ylabel('Range (meters)')
+plt.grid(True)
+plt.legend()
+plt.show()
+```
 
 ### Multiple Trajectories for Different Angles
 ```python
