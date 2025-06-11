@@ -66,6 +66,9 @@ plt.grid(True)
 plt.legend()
 plt.show()
 ```
+![Example Image](https://github.com/mirsaddoyan/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-10.png?raw=true)
+
+Visit: [Colab](https://colab.research.google.com/drive/1IbveeROGuSfvVgSacjFp2BdC1BfIn6ZK)
 
 ### Multiple Trajectories for Different Angles
 ```python
