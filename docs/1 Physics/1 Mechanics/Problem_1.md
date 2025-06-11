@@ -1,138 +1,235 @@
 # Problem 1
-# Investigating the Range as a Function of the Angle of Projection  
+# Investigating the Range as a Function of the Angle of Projection
 
-## 1. Introduction  
+---
 
-Projectile motion is one of the fundamental concepts in classical mechanics, offering a rich framework to study motion under the influence of gravity. Despite its apparent simplicity, the mathematical description of projectile motion reveals intricate relationships between physical parameters such as initial velocity, gravitational acceleration, and the angle of projection.  
+## Motivation
 
-This report explores how the horizontal range of a projectile depends on its angle of projection. The study of projectile motion is widely applicable in fields ranging from sports science to ballistics, space exploration, and engineering. By analyzing the governing equations and simulating projectile trajectories, we aim to develop a deeper understanding of how initial conditions influence motion and the range of a projectile.  
+Projectile motion is a fundamental topic in mechanics that offers a clean yet rich context for understanding the application of differential equations, Newton's laws, and kinematic principles. The central goal is to investigate how the horizontal range of a projectile depends on the angle of launch. Though the setup appears straightforward, the analysis reveals intricate dependencies on initial conditions and physical parameters.
 
-## 2. Theoretical Foundation  
+Understanding projectile motion is essential in a variety of fields—from sports and civil engineering to space science and military applications. By starting from first principles and layering in simulation, this project provides both theoretical insight and computational practice.
 
-### 2.1 Equations of Motion  
+---
 
-Projectile motion is governed by Newton's second law, which leads to the following kinematic equations:  
+## 1. Theoretical Foundation: Differential Equations
 
-$$x = v_0 \cos(\theta) t$$
+### Assumptions:
+- The motion is in two dimensions.
+- Air resistance is neglected.
+- Gravity acts uniformly downward.
+- Launch and landing heights are equal.
 
-$$y = v_0 \sin(\theta) t - \frac{1}{2} g t^2$$
+We begin with Newton's second law:
+$\vec{F} = m\vec{a} \Rightarrow \frac{d^2 \vec{r}}{dt^2} = \vec{a}$
 
-where:  
-- $x$ and $y$ are the horizontal and vertical coordinates of the projectile at time $t$,  
-- $v_0$ is the initial velocity,  
-- $\theta$ is the launch angle,  
-- $g$ is the acceleration due to gravity (typically $ 9.81 \, m/s^2$ on Earth), and  
-- $t$ is the time elapsed since launch.  
+Decomposing motion into x (horizontal) and y (vertical) directions:
 
-### 2.2 Time of Flight  
+#### Horizontal Motion:
+$\frac{d^2x}{dt^2} = 0 \Rightarrow \frac{dx}{dt} = v_0 \cos(\theta) \Rightarrow x(t) = v_0 \cos(\theta) t$
 
-The time of flight can be derived by solving for when the projectile reaches the ground again $(y = 0)$:  
+#### Vertical Motion:
+$\frac{d^2y}{dt^2} = -g \Rightarrow \frac{dy}{dt} = v_0 \sin(\theta) - gt \Rightarrow y(t) = v_0 \sin(\theta) t - \frac{1}{2}gt^2$
 
-$$t_f = \frac{2 v_0 \sin(\theta)}{g}$$
+### Time of Flight:
+Set $y(t) = 0$ to find when the projectile lands:
+$t = \frac{2v_0 \sin(\theta)}{g}$
 
-### 2.3 Range of the Projectile  
+### Horizontal Range:
+$R = v_0 \cos(\theta) \cdot \frac{2v_0 \sin(\theta)}{g} = \frac{v_0^2 \sin(2\theta)}{g}$
 
-The horizontal range $R$ is the horizontal distance traveled by the projectile before it lands, given by:  
+This is the key result showing how range depends on initial velocity, gravity, and angle.
 
-$$R = v_0 \cos(\theta)t_f$$
+---
 
-Substituting $t_f$:  
+## 2. Simulation: Python Code and Visualizations
 
-$$R = \frac{v_0^2 \sin(2\theta)}{g}$$
-
-This equation shows that the range depends on the square of the initial velocity, the gravitational acceleration, and the sine of twice the launch angle. The maximum range occurs when $\theta = 45^\circ$, as $\sin(90^\circ) = 1$ achieves the highest possible value.
-
-### 2.4 Influence of Initial Conditions  
-
-- **Initial Velocity**: Increasing $v_0$ increases the range quadratically.  
-- **Gravity**: A higher gravitational acceleration decreases the range, as seen on planets with stronger gravity than Earth.  
-- **Launch Angle**: The range follows a symmetric pattern about $45^\circ$, with identical ranges for complementary angles $ \theta$ and $90^\circ - \theta$.  
-
-## 3. Analysis of the Range  
-
-### 3.1 Range as a Function of the Angle of Projection  
-
-Plotting $R$ versus $\theta$ reveals a parabolic shape, peaking at $45^\circ$. This reflects the competing influences of vertical and horizontal motion:  
-
-- At low angles, horizontal velocity is high, but vertical motion is limited, reducing the time of flight.  
-- At high angles, the projectile spends more time in the air but lacks sufficient horizontal velocity.  
-
-### 3.2 Effect of Initial Velocity  
-
-For different values of $v_0$, the range increases, but the peak always occurs at $45^\circ$. The effect of increasing $v_0$ is to stretch the range curve upwards.  
-
-### 3.3 Effect of Gravitational Acceleration  
-
-On the Moon, where $g \approx 1.62 \, m/s^2$, projectiles travel farther than on Earth for the same $v_0$. Conversely, on Jupiter $(g \approx 24.79 \, m/s^2)$, the range is significantly reduced.  
-
-## 4. Practical Applications  
-
-### 4.1 Sports Science  
-
-In sports like soccer and basketball, understanding the optimal angle of launch is crucial for accurate shots. Players intuitively adjust the launch angle to maximize range or height.  
-
-### 4.2 Ballistics  
-
-The principles of projectile motion are applied in ballistics, where range calculations inform targeting accuracy. Real-world deviations from the ideal model arise due to air resistance, wind, and spin.  
-
-### 4.3 Space Exploration  
-
-Rocket launches follow a similar principle but account for varying gravitational forces and atmospheric drag. Understanding projectile motion is fundamental to orbital mechanics and mission planning.  
-
-## 5. Implementation and Simulation  
-
-To visualize the dependence of range on projection angle, we develop a Python script that simulates projectile motion and plots the range function.  
-
+### Range vs. Angle Plot
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Constants
-g = 9.81  # gravitational acceleration (m/s^2)
-v0 = 20  # initial velocity (m/s)
-angles = np.linspace(0, 90, 100)  # range of angles in degrees
+v0 = 30  # initial velocity in m/s
+g = 9.81  # gravitational acceleration in m/s^2
+angles = np.linspace(0, 90, 500)
+angles_rad = np.radians(angles)
 
-# Compute range for each angle
-ranges = (v0**2 * np.sin(2 * np.radians(angles))) / g
+# Calculate range
+R = (v0**2 * np.sin(2 * angles_rad)) / g
 
-# Plot results
-plt.figure(figsize=(8, 6))
-plt.plot(angles, ranges, label=f'v0 = {v0} m/s', color='b')
+# Plot range vs angle
+plt.figure(figsize=(10, 6))
+plt.plot(angles, R, color='royalblue')
+plt.axvline(45, color='red', linestyle='--', label='\u03b8 = 45\xb0 (Max Range)')
+plt.title('Projectile Range vs. Launch Angle')
 plt.xlabel('Angle of Projection (degrees)')
-plt.ylabel('Range (m)')
-plt.title('Projectile Range as a Function of Angle')
+plt.ylabel('Range (meters)')
+plt.grid(True)
 plt.legend()
-plt.grid()
 plt.show()
 ```
-[Colab](https://colab.research.google.com/drive/1hoZNFeee6syi7Yc08jQ9eyxHDQqNKHz7?authuser=1#scrollTo=MhV99wEBVqMB)
 
-![Example Image](https://github.com/mirsaddoyan/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-8.png?raw=true)
+### Output:
+
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown.png?raw=true)
 
 
-This script:  
-- Computes the range for angles from $0^\circ$ to $90^\circ$.  
-- Uses trigonometric functions to evaluate the theoretical equation.  
-- Generates a graph displaying the relationship between range and angle.  
+Visit: [Colab](https://colab.research.google.com/drive/1IbveeROGuSfvVgSacjFp2BdC1BfIn6ZK)
 
-## 6. Limitations and Extensions  
 
-### 6.1 Idealized Model Assumptions  
+---
 
-- **No Air Resistance**: Real-world projectiles experience drag, reducing their range.  
-- **Flat Terrain**: Uneven surfaces alter the landing position.  
-- **Constant Gravity**: At large distances, $g$ varies with altitude.  
+### Multiple Trajectories for Different Angles
+```python
+# Time vector
+angles_deg = [15, 30, 45, 60, 75]
+colors = ['blue', 'green', 'orange', 'purple', 'brown']
 
-### 6.2 Incorporating Air Resistance  
+plt.figure(figsize=(10, 6))
+for angle, color in zip(angles_deg, colors):
+    theta = np.radians(angle)
+    t_flight = 2 * v0 * np.sin(theta) / g
+    t_vals = np.linspace(0, t_flight, 300)
+    x = v0 * np.cos(theta) * t_vals
+    y = v0 * np.sin(theta) * t_vals - 0.5 * g * t_vals**2
+    plt.plot(x, y, label=f"{angle}°", color=color)
 
-A more realistic model involves solving equations that account for drag forces:  
+plt.title("Projectile Trajectories for Different Angles")
+plt.xlabel("Horizontal Distance (m)")
+plt.ylabel("Vertical Height (m)")
+plt.grid(True)
+plt.legend()
+plt.show()
+```
+### Output:
 
-$F_d = \frac{1}{2} C_d \rho A v^2$
+Visit: [Colab](https://colab.research.google.com/drive/1IbveeROGuSfvVgSacjFp2BdC1BfIn6ZK)
 
-where $C_d$ is the drag coefficient, $\rho$ is air density, and $A$ is the cross-sectional area. Numerical methods such as Runge-Kutta can be employed to solve the resulting differential equations.  
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-2.png?raw=true)
 
-## 7. Conclusion  
 
-This report explored how the horizontal range of a projectile depends on its launch angle, highlighting key theoretical insights and computational modeling techniques. The parabolic dependence of range on angle, with a maximum at $45^\circ$, reflects a balance between horizontal and vertical motion. The study of projectile motion extends into many real-world domains, from sports to engineering and spaceflight.  
+---
 
-Future work could incorporate air resistance, spin effects, and varying gravitational fields to refine the model further. Understanding projectile motion remains a fundamental yet rich topic in physics and applied sciences.
+### Animated Projectile Motion
+```python
+import matplotlib.animation as animation
+
+fig, ax = plt.subplots(figsize=(8, 5))
+angle = np.radians(45)
+t_flight = 2 * v0 * np.sin(angle) / g
+t_vals = np.linspace(0, t_flight, 300)
+x_vals = v0 * np.cos(angle) * t_vals
+y_vals = v0 * np.sin(angle) * t_vals - 0.5 * g * t_vals**2
+
+line, = ax.plot([], [], 'bo')
+ax.set_xlim(0, max(x_vals))
+ax.set_ylim(0, max(y_vals)*1.1)
+ax.set_xlabel('Horizontal Distance (m)')
+ax.set_ylabel('Vertical Height (m)')
+ax.set_title('Animated Projectile Motion')
+
+# Initialization function
+def init():
+    line.set_data([], [])
+    return line,
+
+# Animation function
+def animate(i):
+    line.set_data(x_vals[i], y_vals[i])
+    return line,
+
+ani = animation.FuncAnimation(fig, animate, frames=len(t_vals), init_func=init, interval=20, blit=True)
+plt.show()
+```
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-3.png?raw=true)
+
+Visit:[Colab](https://colab.research.google.com/drive/1IbveeROGuSfvVgSacjFp2BdC1BfIn6ZK#scrollTo=lAgwoWZfKqAD)
+---
+
+### Range vs. Angle for Different Velocities
+```python
+velocities = [10, 20, 30, 40]
+
+plt.figure(figsize=(10, 6))
+for v in velocities:
+    R = (v**2 * np.sin(2 * angles_rad)) / g
+    plt.plot(angles, R, label=f'v₀ = {v} m/s')
+
+plt.title('Range vs. Angle for Various Initial Velocities')
+plt.xlabel('Angle (degrees)')
+plt.ylabel('Range (m)')
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+Visit[Colab](https://colab.research.google.com/drive/1IbveeROGuSfvVgSacjFp2BdC1BfIn6ZK#scrollTo=lAgwoWZfKqAD)
+### Output:
+Curves rising in height as initial velocity increases, but always peaking at 45°.
+
+---
+
+## 3. Practical Applications
+
+- **Sports**: Optimize kicking or throwing angles.
+- **Engineering**: Design water fountains, civil projectiles, or robotic arm paths.
+- **Aerospace**: Launch trajectories under different gravitational conditions.
+- **Defense**: Missile and artillery trajectory planning.
+
+---
+
+## 4. Extensions and Real-World Models
+
+### Air Resistance
+Introducing drag results in non-linear differential equations. For example:
+$m \frac{d^2x}{dt^2} = -kv_x, \quad m \frac{d^2y}{dt^2} = -mg - kv_y$
+where $k$ is the drag coefficient.
+
+This requires numerical solving methods (like Runge-Kutta) for simulation.
+
+### Python Simulation with Air Resistance (Euler Method)
+```python
+def simulate_drag(v0, theta_deg, dt=0.01, k=0.1):
+    theta = np.radians(theta_deg)
+    vx, vy = v0 * np.cos(theta), v0 * np.sin(theta)
+    x, y = 0, 0
+    positions_x, positions_y = [x], [y]
+
+    while y >= 0:
+        ax = -k * vx
+        ay = -g - k * vy
+        vx += ax * dt
+        vy += ay * dt
+        x += vx * dt
+        y += vy * dt
+        positions_x.append(x)
+        positions_y.append(y)
+
+    return positions_x, positions_y
+
+plt.figure(figsize=(10, 6))
+for angle in [30, 45, 60]:
+    x_vals, y_vals = simulate_drag(30, angle)
+    plt.plot(x_vals, y_vals, label=f"With drag, {angle}°")
+
+plt.xlabel("Horizontal Distance (m)")
+plt.ylabel("Vertical Height (m)")
+plt.title("Projectile Motion with Air Resistance")
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-4.png?raw=true)
+
+Visit[Colab](https://colab.research.google.com/drive/1IbveeROGuSfvVgSacjFp2BdC1BfIn6ZK#scrollTo=hpRSVGJcORIp)
+
+### Uneven Terrain and Variable Gravity
+Other extensions include:
+- Launching from/landing on slopes (geometry needed)
+- Varying $g$ with altitude or planetary conditions
+
+---
+
+## Conclusion
+
+Starting from Newton's laws, we built a full mathematical model of projectile motion using differential equations. We derived the range formula and implemented visual simulations to understand how the angle of projection affects range. The model, while idealized, provides deep insight and serves as a powerful foundation for more complex analyses.
+
+With Python, we've created tools to simulate, visualize, and animate this system dynamically. Extensions include modeling drag and simulating on non-flat terrains—perfect for bridging theory and real-world applications.
