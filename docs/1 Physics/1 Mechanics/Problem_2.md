@@ -1,174 +1,385 @@
 # Problem 2
-# Investigating the Dynamics of a Forced Damped Pendulum  
-
-## 1. Introduction  
-
-The forced damped pendulum is a fundamental example of nonlinear dynamics, demonstrating a rich variety of behaviors, including periodic motion, resonance, and chaotic dynamics. Unlike the simple pendulum, which follows predictable oscillatory motion, the forced damped pendulum is influenced by three competing forces:  
-
-- **Restoring force** due to gravity, which pulls the pendulum toward its equilibrium position.  
-- **Damping force**, which dissipates energy and reduces oscillations over time.  
-- **External forcing**, which periodically adds energy to the system and can lead to resonance or chaos.  
-
-By analyzing this system, we gain insights into many real-world applications, including mechanical oscillators, climate models, electrical circuits, and biological rhythms. This report explores the governing equations, resonance conditions, the influence of key parameters, and computational simulations to visualize different dynamical behaviors.  
+# Investigating the Dynamics of a Forced Damped Pendulum
 
 ---
 
-## 2. Theoretical Foundation  
+## Motivation
 
-### 2.1 Governing Equation  
+The pendulum is a powerful model in physics. From simple harmonic motion to chaos, it demonstrates how small changes — damping and forcing — result in complex behavior. This project investigates:
 
-The motion of a forced damped pendulum is described by the nonlinear differential equation:  
-
-$$\frac{d^2\theta}{dt^2} + \beta \frac{d\theta}{dt} + \omega_0^2 \sin(\theta) = F_0 \cos(\omega t)$$
-
-where:  
-- $\theta$ is the angular displacement,  
-- $\beta$ is the damping coefficient,  
-- $\omega_0 = \sqrt{g/L}$ is the natural frequency of the pendulum (where $ g $ is gravity and $ L $ is the pendulum length),  
-- $F_0$ is the amplitude of the external forcing,  
-- $\omega$ is the driving frequency of the external force, and  
-- $t$ represents time.  
-
-This equation does not have a general closed-form solution, and we often resort to numerical methods to analyze its behavior.  
-
-### 2.2 Approximate Solutions for Small-Angle Oscillations  
-
-For small angles ($\theta \ll 1 $), we approximate $\sin(\theta) \approx \theta$, reducing the equation to a linear form:  
-
-$$\frac{d^2\theta}{dt^2} + \beta \frac{d\theta}{dt} + \omega_0^2 \theta = F_0 \cos(\omega t)$$
-
-The steady-state solution is given by:  
-
-$$\theta(t) = A \cos(\omega t - \delta)$$
-
-where the amplitude $A$ is:  
-
-$$A = \frac{F_0}{\sqrt{(\omega_0^2 - \omega^2)^2 + (\beta \omega)^2}}$$
-
-and $\delta$ is a phase shift dependent on damping and driving frequency.  
-
-### 2.3 Resonance and Energy Transfer  
-
-Resonance occurs when the external driving frequency $\omega$ matches the natural frequency $\omega_0$, leading to a significant increase in amplitude. However, damping limits the amplitude growth, preventing divergence. The resonance condition is approximately:  
-
-$$\omega \approx \sqrt{\omega_0^2 - \frac{\beta^2}{2}}$$
-
-For small damping, the system exhibits large oscillations, while heavy damping suppresses resonance.  
+- **Simple Pendulum**
+- **Damped Pendulum**
+- **Forced Damped Pendulum**
 
 ---
 
-## 3. Analysis of Dynamics  
+## 1. Differential Equations
 
-### 3.1 Influence of Parameters  
+### Simple Pendulum
 
-1. **Damping Coefficient ($\beta$)**:  
-   - Low damping leads to sustained oscillations.  
-   - Moderate damping smooths oscillations without removing periodicity.  
-   - High damping prevents oscillations (overdamped behavior).  
+$$\frac{d^2\theta}{dt^2} + \omega_0^2 \sin(\theta) = 0$$
 
-2. **Driving Amplitude ($F_0$)**:  
-   - Small $ F_0 $ results in nearly linear oscillations.  
-   - Large $ F_0 $ leads to nonlinear effects, including bifurcations and chaos.  
+For small angles:
 
-3. **Driving Frequency ($\omega$)**:  
-   - When $\omega \approx \omega_0$, resonance amplifies motion.  
-   - Far from resonance, oscillations have a reduced response.  
-
-### 3.2 Transition to Chaos  
-
-For certain parameter values, the pendulum exhibits **chaotic behavior**, characterized by:  
-- Sensitive dependence on initial conditions (butterfly effect).  
-- Aperiodic motion, where no two cycles are identical.  
-- Strange attractors in phase space.  
-
-One method to study chaos is through **Poincaré sections**, where points in phase space are plotted at regular intervals, revealing ordered or chaotic structures.  
+$$\frac{d^2\theta}{dt^2} + \omega_0^2 \theta = 0, \quad \omega_0 = \sqrt{\frac{g}{L}}$$
 
 ---
 
-## 4. Practical Applications  
+### Damped Pendulum
 
-### 4.1 Engineering and Structural Vibrations  
-
-The forced damped pendulum model is applicable in vibration analysis of buildings and bridges. For example, suspension bridges can experience resonance under periodic wind forces, leading to catastrophic oscillations if damping is insufficient (e.g., Tacoma Narrows Bridge collapse).  
-
-### 4.2 Electrical Circuits  
-
-The equation governing a driven RLC circuit (resistor-inductor-capacitor) is mathematically analogous to the forced damped pendulum equation. The external voltage plays the role of forcing, resistance corresponds to damping, and inductance provides restoring force.  
-
-### 4.3 Biomechanics and Gait Analysis  
-
-The human walking cycle can be modeled as a driven oscillator. Variations in stride due to fatigue, uneven terrain, or external forces (e.g., prosthetics) can be analyzed using forced damped pendulum dynamics.  
+$$\frac{d^2\theta}{dt^2} + b \frac{d\theta}{dt} + \omega_0^2 \theta = 0$$
 
 ---
 
-## 5. Implementation and Simulation  
+### Forced Pendulum 
 
-We implement a numerical solution using Python’s Runge-Kutta method to analyze the system’s behavior under different conditions.  
+$$\frac{d^2\theta}{dt^2} + \omega_0^2 \sin(\theta) = A \cos(\omega t)$$
+
+Where:
+
+- $\theta(t)$: angular displacement (in radians)  
+- $\omega_0 = \sqrt{\frac{g}{L}}$: natural frequency of the pendulum  
+- $A$: amplitude of the external driving force (torque per unit mass and length)  
+- $\omega$: angular frequency of the driving force  
+- $t$: time  
+- $g$: gravitational acceleration  
+- $L$: length of the pendulum
+
+---
+
+
+### Forced Damped Pendulum
+
+$$\frac{d^2\theta}{dt^2} + b \frac{d\theta}{dt} + \omega_0^2 \sin(\theta) = A \cos(\omega t)$$
+
+---
+
+## 2. Visualizing the Simple Pendulum (Small Angle Approximation)
 
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import solve_ivp
 
 # Parameters
-g = 9.81    # Gravity (m/s^2)
-L = 1.0     # Length of pendulum (m)
-beta = 0.2  # Damping coefficient
-F0 = 1.2    # Driving force amplitude
-omega = 2.0 # Driving frequency
-
-# Differential equation
-def pendulum(t, y):
-    theta, omega_t = y
-    dtheta_dt = omega_t
-    domega_dt = - (g / L) * np.sin(theta) - beta * omega_t + F0 * np.cos(omega * t)
-    return [dtheta_dt, domega_dt]
-
-# Initial conditions
+g = 9.81
+L = 1.0
+omega0 = np.sqrt(g / L)
 theta0 = 0.2
-omega0 = 0
-y0 = [theta0, omega0]
-t_span = (0, 50)
-t_eval = np.linspace(*t_span, 1000)
+t = np.linspace(0, 10, 1000)
+theta = theta0 * np.cos(omega0 * t)
 
-# Solve ODE
-sol = solve_ivp(pendulum, t_span, y0, t_eval=t_eval, method='RK45')
-
-# Plot results
-plt.figure(figsize=(8, 6))
-plt.plot(sol.t, sol.y[0], label="Angular displacement")
+# Plot
+plt.figure(figsize=(10, 4))
+plt.plot(t, theta)
+plt.title("Simple Pendulum (Small Angle Approximation)")
 plt.xlabel("Time (s)")
-plt.ylabel("Theta (rad)")
-plt.title("Forced Damped Pendulum Motion")
-plt.legend()
-plt.grid()
+plt.ylabel("Angle (rad)")
+plt.grid(True)
 plt.show()
 ```
-[Colab](https://colab.research.google.com/drive/1fRmQYP5WkB1YjhRsynlv7aoUMijme1g1?authuser=1)
+Visit: [Colab](https://colab.research.google.com/drive/1mZ4tKUUQdA2M2ejXxRenjbDZ4mv9cX8s#scrollTo=AMg6N81d6J_D)
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown5.png?raw=true)
+---
 
-![Example Image](https://github.com/mirsaddoyan/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-9.png?raw=true)
+## 3. Visualizing the Damped Pendulum 
 
-### 5.1 Phase Space and Poincaré Sections  
+```python
+# Damped system using RK4
+import numpy as np
+import matplotlib.pyplot as plt
+dt = 0.01
+t = np.arange(0, 20, dt)
+b = 0.3  # damping
+theta = np.zeros_like(t)
+omega = np.zeros_like(t)
+theta[0] = 0.5
+# Define omega0 here 
+omega0 = 1.0  # You can change this value to the desired natural frequency
 
-We extend this analysis by plotting **phase portraits** (angular velocity vs. displacement) and **Poincaré sections**, which reveal transitions from periodic to chaotic motion.  
+def rk4_damped(theta, omega, t, dt, b, omega0):
+    def f(t, y):
+        theta, omega = y
+        return np.array([omega, -b * omega - omega0**2 * theta])
+    
+    y = np.array([theta, omega])
+    k1 = f(t, y)
+    k2 = f(t + dt/2, y + dt*k1/2)
+    k3 = f(t + dt/2, y + dt*k2/2)
+    k4 = f(t + dt, y + dt*k3)
+    return y + dt * (k1 + 2*k2 + 2*k3 + k4)/6
+
+for i in range(1, len(t)):
+    theta[i], omega[i] = rk4_damped(theta[i-1], omega[i-1], t[i-1], dt, b, omega0)
+
+
+plt.figure(figsize=(10, 4))
+plt.plot(t, theta)
+plt.title("Damped Pendulum Motion")
+plt.xlabel("Time (s)")
+plt.ylabel("Angle (rad)")
+plt.grid(True)
+plt.show()
+```
+Visit: [Colab](https://colab.research.google.com/drive/1mNZ4qqAkfLGtsvfvqSBXUXPuzzm0EqMt#scrollTo=BRT2yI8kOk18)
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-8.png?raw=true)
+---
+## 4. Visualizing the Forced Pendulum
+```
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Parameters
+g = 9.81
+L = 1.0
+omega0 = np.sqrt(g / L)
+theta0 = 0.2
+omega_init = 0.0
+b = 0.0         # No damping
+A = 1.2         # Forcing amplitude
+omega_d = 2/3   # Driving frequency
+dt = 0.01
+t_max = 40
+t = np.arange(0, t_max, dt)
+
+# RK4 integration for the forced pendulum
+def rk4_step(theta, omega, t, dt):
+    def f(t, y):
+        theta, omega = y
+        dtheta = omega
+        domega = -omega0**2 * np.sin(theta) + A * np.cos(omega_d * t)
+        return np.array([dtheta, domega])
+    
+    y = np.array([theta, omega])
+    k1 = f(t, y)
+    k2 = f(t + dt/2, y + dt*k1/2)
+    k3 = f(t + dt/2, y + dt*k2/2)
+    k4 = f(t + dt, y + dt*k3)
+    return y + dt * (k1 + 2*k2 + 2*k3 + k4)/6
+
+# Simulation
+theta = np.zeros_like(t)
+omega = np.zeros_like(t)
+theta[0] = theta0
+omega[0] = omega_init
+
+for i in range(1, len(t)):
+    theta[i], omega[i] = rk4_step(theta[i-1], omega[i-1], t[i-1], dt)
+
+# Plotting
+fig, axs = plt.subplots(1, 2, figsize=(12, 4))
+
+# Time Series
+axs[0].plot(t, theta, color='darkorange')
+axs[0].set_title("Forced Pendulum (No Damping) - Time Series")
+axs[0].set_xlabel("Time (s)")
+axs[0].set_ylabel("Angle θ (rad)")
+axs[0].grid(True)
+
+# Phase Portrait
+axs[1].plot(theta, omega, color='orangered')
+axs[1].set_title("Forced Pendulum (No Damping) - Phase Portrait")
+axs[1].set_xlabel("θ (rad)")
+axs[1].set_ylabel("ω (rad/s)")
+axs[1].grid(True)
+
+plt.tight_layout()
+plt.show()
+```
+Visit: [Colab](https://colab.research.google.com/drive/1mNZ4qqAkfLGtsvfvqSBXUXPuzzm0EqMt#scrollTo=X-2nJcXnjtpP)
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-9.png?raw=true)
+
+---
+## 5. Visualizing the Forced Damped Pendulum
+
+```python
+# Forced Damped Pendulum Simulation
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Parameters
+omega0 = 2
+dt = 0.01
+t = np.arange(0, 10, dt)
+A = 1.2
+omega_d = 2/3
+b = 0.5
+theta = np.zeros_like(t)
+omega = np.zeros_like(t)
+theta[0] = 0.5
+
+def rk4_forced(theta, omega, t, dt, b, A, omega_d, omega0):
+    def f(t, y):
+        theta, omega = y
+        return np.array([omega, -b * omega - omega0**2 * np.sin(theta) + A * np.cos(omega_d * t)])
+    
+    y = np.array([theta, omega])
+    k1 = f(t, y)
+    k2 = f(t + dt/2, y + dt*k1/2)
+    k3 = f(t + dt/2, y + dt*k2/2)
+    k4 = f(t + dt, y + dt*k3)
+    return y + dt * (k1 + 2*k2 + 2*k3 + k4)/6
+
+for i in range(1, len(t)):
+    theta[i], omega[i] = rk4_forced(theta[i-1], omega[i-1], t[i-1], dt, b, A, omega_d, omega0)
+
+# Plot
+plt.figure(figsize=(10, 4))
+plt.plot(t, theta)
+plt.title("Forced Damped Pendulum Motion")
+plt.xlabel("Time (s)")
+plt.ylabel("Angle (rad)")
+plt.grid(True)
+plt.show()
+```
+Visit: [Colab](https://colab.research.google.com/drive/1J1BiWvt02427kZD9_FCtcQln2kks8YP0)
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-7.png?raw=true)
+---
+
+## 6. Animation of the Forced Damped Pendulum
+
+```python
+import matplotlib.animation as animation
+from IPython.display import HTML
+import numpy as np # This was missing
+
+# Assuming L represents the length of the pendulum, set it to a reasonable value
+L = 1  # You can adjust this value as needed
+
+x_vals = L * np.sin(theta)
+y_vals = -L * np.cos(theta)
+
+fig, ax = plt.subplots(figsize=(6, 6))
+ax.set_xlim(-1.2, 1.2)
+ax.set_ylim(-1.2, 1.2)
+ax.set_aspect('equal')
+ax.grid()
+line, = ax.plot([], [], 'o-', lw=2)
+trail, = ax.plot([], [], '-', lw=0.5)
+xdata, ydata = [], []
+
+def init():
+    line.set_data([], [])
+    trail.set_data([], [])
+    return line, trail
+
+def animate(i):
+    x, y = x_vals[i], y_vals[i]
+    xdata.append(x)
+    ydata.append(y)
+    if len(xdata) > 100:
+        xdata.pop(0)
+        ydata.pop(0)
+    line.set_data([0, x], [0, y])
+    trail.set_data(xdata, ydata)
+    return line, trail
+
+ani = animation.FuncAnimation(fig, animate, frames=range(0, len(x_vals), 5),
+                              init_func=init, blit=True, interval=20)
+plt.close()
+HTML(ani.to_jshtml())
+```
+Visit: [Colab](https://colab.research.google.com/drive/1J1BiWvt02427kZD9_FCtcQln2kks8YP0#scrollTo=vd6dcAXcQ5U9)
+---
+```
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+g = 9.81
+L = 1.0
+omega0 = np.sqrt(g / L)
+theta0 = 0.2
+omega_init = 0.0
+dt = 0.01
+t_max = 20
+t = np.arange(0, t_max, dt)
+
+# Unified RK4 method
+def rk4_step(theta, omega, t, dt, b=0, A=0, omega_d=0, use_sin=True):
+    def f(t, y):
+        theta, omega = y
+        dtheta = omega
+        if use_sin:
+            domega = -b * omega - omega0**2 * np.sin(theta) + A * np.cos(omega_d * t)
+        else:
+            domega = -b * omega - omega0**2 * theta + A * np.cos(omega_d * t)
+        return np.array([dtheta, domega])
+    y = np.array([theta, omega])
+    k1 = f(t, y)
+    k2 = f(t + dt/2, y + dt*k1/2)
+    k3 = f(t + dt/2, y + dt*k2/2)
+    k4 = f(t + dt, y + dt*k3)
+    return y + dt * (k1 + 2*k2 + 2*k3 + k4)/6
+
+def simulate(b=0, A=0, omega_d=0, use_sin=True):
+    theta = np.zeros_like(t)
+    omega = np.zeros_like(t)
+    theta[0], omega[0] = theta0, omega_init
+    for i in range(1, len(t)):
+        theta[i], omega[i] = rk4_step(theta[i-1], omega[i-1], t[i-1], dt, b, A, omega_d, use_sin)
+    return theta, omega
+
+# Simulate all three
+theta1, omega1 = simulate(b=0, A=0, use_sin=False)                   # Simple
+theta2, omega2 = simulate(b=0.2, A=0, use_sin=False)                 # Damped
+theta3, omega3 = simulate(b=0.5, A=1.2, omega_d=2/3, use_sin=True)   # Forced
+
+# Plot layout
+fig, axs = plt.subplots(3, 2, figsize=(12, 10))
+titles = ["1) Simple Pendulum", "2) Damped Pendulum", "3) Forced Pendulum"]
+colors = ['red', 'blue', 'teal']
+
+# Time Series
+axs[0, 0].plot(t, theta1, color=colors[0])
+axs[1, 0].plot(t, theta2, color=colors[1])
+axs[2, 0].plot(t, theta3, color=colors[2])
+for i in range(3):
+    axs[i, 0].set_title("Time Series")
+    axs[i, 0].set_xlabel("Time (s)")
+    axs[i, 0].set_ylabel("θ (rad)")
+    axs[i, 0].grid(True)
+    axs[i, 0].annotate(titles[i], xy=(0.95, 0.85), xycoords='axes fraction',
+                      ha='right', fontsize=11, color=colors[i], weight='bold')
+
+# Phase Portraits
+axs[0, 1].plot(theta1, omega1, color=colors[0])
+axs[1, 1].plot(theta2, omega2, color=colors[1])
+axs[2, 1].plot(theta3, omega3, color=colors[2])
+for i in range(3):
+    axs[i, 1].set_title("Phase Portrait")
+    axs[i, 1].set_xlabel("θ (rad)")
+    axs[i, 1].set_ylabel("ω (rad/s)")
+    axs[i, 1].grid(True)
+
+plt.tight_layout()
+plt.show()
+```
+Visit: [Colab](https://colab.research.google.com/drive/1J1BiWvt02427kZD9_FCtcQln2kks8YP0#scrollTo=DyuOwt_mgOai)
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-6.png?raw=true)
+
+## 7. Extensions and Advanced Explorations
+
+- **Phase Portraits & Poincaré Sections**: Reveal geometry of motion and transitions to chaos.
+- **Bifurcation Diagrams**: Vary forcing amplitude $A$ or frequency $\omega$ and plot long-term values.
+- **Energy Analysis**: Study how energy is gained/lost under forcing and damping.
+- **Lyapunov Exponents**: Quantify sensitivity to initial conditions (chaos).
+- **Double Pendulum**: A 2-link pendulum introduces deeper chaos with no external force.
+- **Planetary Gravity**: Modify $g$ to simulate behavior on Mars, Moon, etc.
 
 ---
 
-## 6. Limitations and Extensions  
+## 8. Conclusion
 
-### 6.1 Model Assumptions  
-- The model assumes a **rigid** pendulum and **constant gravity**.  
-- Air resistance is modeled as simple damping; **nonlinear damping** could improve accuracy.  
-- **Non-periodic forcing** (e.g., random perturbations) can further generalize the model.  
+This project comprehensively examined pendulum dynamics in three stages:
 
-### 6.2 Chaos and Bifurcations  
+| Variant               | Damping | Forcing | Behavior                             |
+|----------------------|---------|---------|--------------------------------------|
+| Simple Pendulum      | ✘       | ✘       | Periodic                             |
+| Damped Pendulum      | ✔       | ✘       | Decaying oscillations                |
+| Forced Damped        | ✔       | ✔       | Periodic / Quasiperiodic / Chaotic   |
 
-By systematically varying $F_0$ and $\omega$, bifurcation diagrams can be constructed, illustrating transitions to chaos. More advanced analysis, such as **Lyapunov exponents**, can quantify chaotic behavior.  
-
----
-
-## 7. Conclusion  
-
-The forced damped pendulum serves as a powerful model to explore nonlinear dynamics, resonance, and chaos. Through analytical and computational techniques, we have examined how parameters influence motion, demonstrating the transition from periodic to chaotic behavior. This model is essential in various domains, from engineering to biomechanics, highlighting the universal nature of driven oscillatory systems.  
-
-Future work could involve experimental validation and extending the model to include variable damping, stochastic forces, or coupled oscillators to study synchronization effects.
+We:
+- Derived differential equations
+- Simulated each case using Runge-Kutta
+- Visualized the systems with graphs and animations
+- Proposed extensions into bifurcations, chaos, and energy studies
