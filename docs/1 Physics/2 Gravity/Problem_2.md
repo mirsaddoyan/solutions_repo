@@ -1,157 +1,299 @@
 # Problem 2
-# **Escape Velocities and Cosmic Velocities**  
+# **Escape Velocities and Cosmic Velocities**
 
-## **1. Introduction**  
+## **1. Introduction**
 
-The ability of an object to leave the gravitational influence of a celestial body is a fundamental concept in space exploration. Understanding how fast a spacecraft or any object must travel to achieve a stable orbit, escape a planet, or even leave a star system entirely is crucial for designing space missions, launching satellites, and interplanetary travel.  
+In celestial mechanics and spaceflight engineering, understanding the conditions required to move between gravitational domains is essential. From launching satellites into Earth orbit to sending interstellar probes like *Voyager*, space missions must overcome gravitational boundaries defined by the **cosmic velocities**.
 
-The **escape velocity** is the minimum speed an object must have to completely overcome a planet’s gravitational pull without further propulsion. More generally, the **cosmic velocities** define different velocity thresholds required for various stages of motion in space:  
-1. The **first cosmic velocity** (orbital velocity) allows an object to maintain a stable circular orbit around a planet.  
-2. The **second cosmic velocity** (escape velocity) is the minimum velocity needed to leave the planet’s gravitational influence.  
-3. The **third cosmic velocity** (interplanetary velocity) is the speed required to escape a star’s gravitational field from a planet’s orbit.  
+These velocities represent thresholds in orbital mechanics, each marking a different kind of escape:
 
-This report aims to:  
-1. Define and derive the equations for the first, second, and third cosmic velocities.  
-2. Analyze the factors affecting these velocities, such as planetary mass and radius.  
-3. Compute and visualize these velocities for different celestial bodies, including Earth, Mars, and Jupiter.  
-4. Explore their significance in space exploration, including satellite deployment, deep-space missions, and potential interstellar travel.  
+- **First Cosmic Velocity**: Required to enter stable circular orbit.
+- **Second Cosmic Velocity**: Required to completely escape a planet’s gravity.
+- **Third Cosmic Velocity**: Required to escape both a planet’s and its star's gravity, reaching interstellar space.
 
 ---
 
-## **2. Theoretical Foundation**  
+## **2. Theoretical Foundation**
 
-### **2.1 The First Cosmic Velocity (Orbital Velocity)**  
+### **2.1 First Cosmic Velocity – Orbital Velocity**
 
-The **first cosmic velocity** ($v_1$) is the speed required to maintain a stable circular orbit around a planet without falling back to its surface. This is also known as the **orbital velocity** and is derived by equating the **gravitational force** to the required **centripetal force** for circular motion.  
+**Concept**: The speed to stay in low circular orbit, counteracting gravity with centripetal acceleration.
 
-The gravitational force acting on an object of mass $m$ orbiting a planet of mass $M$ at radius $r$ is:  
+**Derivation**:
+$$F_{\text{gravity}} = \frac{GMm}{r^2}, \quad F_{\text{centripetal}} = \frac{mv^2}{r}$$
 
-$$F_g = \frac{G M m}{r^2}$$
+Equating the two:
+$$\frac{GMm}{r^2} = \frac{mv_1^2}{r} \Rightarrow v_1 = \sqrt{\frac{GM}{r}}$$
 
-The required centripetal force to maintain circular motion is:  
-
-$$F_c = \frac{m v_1^2}{r}$$
-
-Setting these equal to each other:  
-
-$$\frac{G M m}{r^2} = \frac{m v_1^2}{r}$$
-
-Canceling $m$ and solving for $v_1$:  
-
-$$v_1 = \sqrt{\frac{G M}{r}}$$
-
-This is the velocity needed for a circular orbit at radius $r$. If an object moves slower than this, it will fall back to the planet; if it moves faster, it will enter an elliptical or escape trajectory.  
+- *Intuition*: Go too slow, you fall back. Go too fast, you escape.
 
 ---
 
-### **2.2 The Second Cosmic Velocity (Escape Velocity)**  
+### **2.2 Second Cosmic Velocity – Escape Velocity**
 
-The **second cosmic velocity** ($v_2$) is the **escape velocity**, which is the minimum speed an object must reach to break free from a planet’s gravitational field without additional propulsion.  
+**Concept**: Minimum speed to reach infinity with zero kinetic energy remaining.
 
-We derive this by considering **energy conservation**. A body is considered to have escaped if its **total mechanical energy** is non-negative:  
+**Energy Approach**:
+$$E = K + U = \frac{1}{2}mv^2 - \frac{GMm}{r} \geq 0 \Rightarrow v_2 = \sqrt{\frac{2GM}{r}}$$
 
-$$E = K + U \geq 0$$
-
-where:  
-- $K = \frac{1}{2} m v^2$ is the **kinetic energy**,  
-- $U = -\frac{G M m}{r}$ is the **gravitational potential energy**.  
-
-At the planet’s surface ($r = R$), the object must have enough kinetic energy to reach $r \to \infty$, where $U \to 0$. Thus, we set:  
-
-$$\frac{1}{2} m v_2^2 - \frac{G M m}{R} = 0$$
-
-Solving for $v_2$:  
-
-$$v_2 = \sqrt{\frac{2 G M}{R}}$$
-
-This means that to completely escape the gravitational pull of a planet, an object must travel at least $v_2$. If launched with a velocity lower than $v_2$, it will eventually fall back or enter an elliptical orbit.  
+- *Notice*: $v_2 = \sqrt{2} \cdot v_1$. It takes ~41% more speed than orbiting to escape.
 
 ---
 
-### **2.3 The Third Cosmic Velocity (Interplanetary Velocity)**  
+### **2.3 Third Cosmic Velocity – Solar System Escape**
 
-The **third cosmic velocity** ($v_3$) is the velocity required for an object to escape from a **star’s gravitational field** while starting from a planet’s orbit. This applies to interstellar missions, where spacecraft need to leave the Solar System entirely.  
+**Concept**: Speed to escape both the planet **and** the Sun from the planet’s orbit.
 
-We can derive $v_3$ similarly to $v_2$, but now considering escape from the **Sun’s gravitational field** rather than a planet’s. If an object starts from a planet at distance $R_p$ from the Sun (e.g., Earth’s orbital radius $R_E$), the escape velocity from the Sun is:  
+$$v_3 = \sqrt{v_2^2 + v_{\text{orbit,Sun}}^2} = \sqrt{2 \frac{GM_p}{r} + \frac{GM_\odot}{R_{\text{orbit}}}}$$
 
-$$v_3 = \sqrt{v_2^2 + v_{\text{orb}}^2}$$
+Where:
+- $M_\odot$: mass of the Sun.
+- $R_{\text{orbit}}$: orbital radius of the planet.
 
-where:  
-- $v_2 = \sqrt{\frac{2 G M_{\odot}}{R_p}}$ is the **escape velocity from the Sun** at distance $R_p$,  
-- $v_{\text{orb}} = \sqrt{\frac{G M_{\odot}}{R_p}}$ is the **orbital velocity of the planet** around the Sun.  
-
-Simplifying:  
-
-$$v_3 = \sqrt{3 \frac{G M_{\odot}}{R_p}}$$
-
-This shows that interstellar probes must exceed **three times the Sun’s orbital velocity** at that location to escape its gravity completely.  
+- *Key Point*: You’re fighting **two gravity wells**: the planet and the star.
 
 ---
 
-## **3. Computational Analysis**  
+## **3. Simulation & Code**
 
-To visualize these velocities, we compute and compare them for **Earth, Mars, and Jupiter**.  
-
-### **3.1 Python Simulation of Escape and Cosmic Velocities**  
+### **3.1 Python Code: Velocity Calculations & Visualization**
 
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Constants
-G = 6.674e-11  # Gravitational constant (m^3 kg^-1 s^-2)
+G = 6.67430e-11
+M_sun = 1.989e30
 
-# Celestial bodies (mass in kg, radius in meters)
+# [Mass (kg), Radius (m), Orbital Radius from Sun (m)]
 bodies = {
-    "Earth": {"M": 5.97e24, "R": 6.371e6},
-    "Mars": {"M": 6.39e23, "R": 3.389e6},
-    "Jupiter": {"M": 1.90e27, "R": 6.9911e7}
+    "Earth": [5.972e24, 6.371e6, 1.496e11],
+    "Moon": [7.342e22, 1.737e6, 1.5e11 + 3.844e8],
+    "Mars": [6.417e23, 3.389e6, 2.279e11],
+    "Jupiter": [1.898e27, 6.9911e7, 7.785e11]
 }
 
-# Calculate velocities
-for planet, data in bodies.items():
-    M, R = data["M"], data["R"]
-    v1 = np.sqrt(G * M / R)  # First cosmic velocity
-    v2 = np.sqrt(2 * G * M / R)  # Second cosmic velocity
-    print(f"{planet}:")
-    print(f"  First Cosmic Velocity (Orbital) = {v1:.2f} m/s")
-    print(f"  Second Cosmic Velocity (Escape) = {v2:.2f} m/s\n")
+def v1(M, R): return np.sqrt(G * M / R)
+def v2(M, R): return np.sqrt(2 * G * M / R)
+def v3(M, R, R_orbit): return np.sqrt(v2(M, R)**2 + (G * M_sun / R_orbit))
 
-# Plot escape velocity vs. planetary radius
-radii = np.array([data["R"] for data in bodies.values()])
-velocities = np.array([np.sqrt(2 * G * data["M"] / data["R"]) for data in bodies.values()])
+v1s, v2s, v3s, names = [], [], [], []
 
-plt.figure(figsize=(8, 6))
-plt.scatter(radii / 1e6, velocities / 1e3, color='r', label='Escape Velocity')
-plt.xlabel("Planetary Radius (x10^6 m)")
-plt.ylabel("Escape Velocity (km/s)")
-plt.title("Escape Velocities for Different Planets")
+for name, (M, R, R_orbit) in bodies.items():
+    names.append(name)
+    v1s.append(v1(M, R))
+    v2s.append(v2(M, R))
+    v3s.append(v3(M, R, R_orbit))
+
+# Plot
+x = np.arange(len(names))
+width = 0.25
+
+plt.figure(figsize=(10, 6))
+plt.bar(x - width, np.array(v1s)/1000, width, label='1st Cosmic Velocity')
+plt.bar(x, np.array(v2s)/1000, width, label='2nd Cosmic Velocity')
+plt.bar(x + width, np.array(v3s)/1000, width, label='3rd Cosmic Velocity')
+
+plt.xticks(x, names)
+plt.ylabel("Velocity (km/s)")
+plt.title("Cosmic Velocities of Celestial Bodies")
+plt.grid(True)
 plt.legend()
-plt.grid()
+plt.tight_layout()
 plt.show()
 ```
-[Colab](https://colab.research.google.com/drive/1IqRR9KKWCAXNI3wQw8ww3D9J9YYc_tqs?authuser=1)
+Visit: [Colab](https://colab.research.google.com/drive/1ZKQKWnH0bVhEBpNgUawo7nmMMx6MW80Y#scrollTo=ob5gb7chwMNJ)
 
-![Example Image](https://github.com/mirsaddoyan/solutions_repo/blob/main/docs/1%20Physics/2%20Gravity/Unknown-11.png?raw=true)
-
-### **3.2 Interpretation of Results**  
-
-- **Earth:**  
-  - Orbital velocity: ~7.91 km/s  
-  - Escape velocity: ~11.19 km/s  
-
-- **Mars:**  
-  - Orbital velocity: ~3.58 km/s  
-  - Escape velocity: ~5.02 km/s  
-
-- **Jupiter:**  
-  - Orbital velocity: ~42.1 km/s  
-  - Escape velocity: ~59.5 km/s  
-
-Since Jupiter has a much larger mass than Earth or Mars, its escape velocity is significantly higher, requiring much more energy for missions to leave its gravitational influence.  
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/2%20Gravity/Unknown-12.png?raw=true)
 
 ---
 
-## **4. Conclusion**  
+### **3.2 Numerical Results Table**
 
-Escape and cosmic velocities are crucial concepts in space travel. The relationships derived help determine the speeds needed to reach orbit, escape planets, and even leave the Solar System. Understanding these velocities allows scientists and engineers to design efficient space missions, optimize fuel consumption, and explore beyond Earth.
+| Body     | $v_1$ (km/s) | $v_2$ (km/s) | $v_3$ (km/s) | Mass Ratio (to Earth) |
+|----------|----------------|----------------|----------------|------------------------|
+| Earth    | 7.91           | 11.19          | ~42.1          | 1.00                   |
+| Moon     | 1.68           | 2.38           | ~41.4          | 0.012                  |
+| Mars     | 3.56           | 5.03           | ~40.3          | 0.107                  |
+| Jupiter  | 42.1           | 59.5           | ~75.4          | 317.8                  |
+
+---
+### 3.3 Escape Velocity vs. Planetary Radius and Mass
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Gravitational constant
+G = 6.67430e-11
+
+# Ranges of radius and mass
+radii = np.linspace(1e6, 1e8, 100)  # from 1,000 km to 100,000 km
+masses = [1e22, 1e24, 1e26, 1e28]  # various planet masses
+
+plt.figure(figsize=(10, 6))
+for M in masses:
+    v_esc = np.sqrt(2 * G * M / radii)
+    plt.plot(radii / 1e6, v_esc / 1e3, label=f'M = {M:.0e} kg')
+
+plt.xlabel('Radius (10⁶ m)')
+plt.ylabel('Escape Velocity (km/s)')
+plt.title('Escape Velocity vs. Radius for Different Masses')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+``` 
+Visit: [Colab](https://colab.research.google.com/drive/1ZKQKWnH0bVhEBpNgUawo7nmMMx6MW80Y#scrollTo=ob5gb7chwMNJ)
+
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/2%20Gravity/Unknown-13.png?raw=true)
+
+---
+
+### 3.4 Cosmic Velocity Ratios (v2/v1 and v3/v2)
+```python
+# Calculate ratios
+v1_arr = np.array(v1s)
+v2_arr = np.array(v2s)
+v3_arr = np.array(v3s)
+
+ratios_21 = v2_arr / v1_arr
+ratios_32 = v3_arr / v2_arr
+
+x = np.arange(len(names))
+width = 0.35
+
+plt.figure(figsize=(10, 5))
+plt.bar(x - width/2, ratios_21, width, label='v₂ / v₁')
+plt.bar(x + width/2, ratios_32, width, label='v₃ / v₂')
+
+plt.xticks(x, names)
+plt.ylabel("Velocity Ratio")
+plt.title("Cosmic Velocity Ratios Across Celestial Bodies")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+Visit: [Colab](https://colab.research.google.com/drive/1ZKQKWnH0bVhEBpNgUawo7nmMMx6MW80Y#scrollTo=ob5gb7chwMNJ)
+
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/2%20Gravity/Unknown-14.png?raw=true)
+
+---
+
+### 3.5 3D-Like Plot of Velocities vs Mass and Radius
+
+```python
+from mpl_toolkits.mplot3d import Axes3D
+
+# Meshgrid of radii and masses
+r_vals = np.linspace(1e6, 1e8, 100)
+m_vals = np.linspace(1e22, 1e28, 100)
+R, M = np.meshgrid(r_vals, m_vals)
+
+V_escape = np.sqrt(2 * G * M / R)
+
+fig = plt.figure(figsize=(12, 8))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(R/1e6, M/1e24, V_escape/1e3, cmap='viridis')
+
+ax.set_xlabel('Radius (10⁶ m)')
+ax.set_ylabel('Mass (10²⁴ kg)')
+ax.set_zlabel('Escape Velocity (km/s)')
+ax.set_title('Escape Velocity vs. Mass and Radius')
+plt.tight_layout()
+plt.show()
+```
+Visit: [Colab](https://colab.research.google.com/drive/1ZKQKWnH0bVhEBpNgUawo7nmMMx6MW80Y#scrollTo=ob5gb7chwMNJ)
+
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/2%20Gravity/Unknown-15.png?raw=true)
+
+---
+
+### 3.6 Animated Escape Velocity vs. Radius for Increasing Mass
+
+
+
+```python
+# First, import animation tools
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+from IPython.display import HTML
+
+# Constants
+G = 6.67430e-11
+radii = np.linspace(1e6, 1e8, 300)  # Radii from 1000 km to 100,000 km
+
+# Mass range (frame-wise)
+mass_vals = np.linspace(1e22, 1e28, 100)  # From small asteroid to gas giant
+```
+
+```python
+fig, ax = plt.subplots(figsize=(8, 6))
+line, = ax.plot([], [], lw=2)
+text = ax.text(0.05, 0.9, '', transform=ax.transAxes)
+
+ax.set_xlim(radii[0]/1e6, radii[-1]/1e6)
+ax.set_ylim(0, 100)
+ax.set_xlabel('Radius (10⁶ m)')
+ax.set_ylabel('Escape Velocity (km/s)')
+ax.set_title('Escape Velocity vs Radius for Varying Mass')
+ax.grid()
+
+def init():
+    line.set_data([], [])
+    text.set_text('')
+    return line, text
+
+def update(frame):
+    M = mass_vals[frame]
+    v_esc = np.sqrt(2 * G * M / radii) / 1000  # Convert to km/s
+    line.set_data(radii / 1e6, v_esc)
+    text.set_text(f'Mass = {M:.1e} kg')
+    return line, text
+
+ani = FuncAnimation(fig, update, frames=len(mass_vals), init_func=init, blit=True)
+plt.close()
+HTML(ani.to_jshtml())
+```
+Visit: [Colab](https://colab.research.google.com/drive/1ZKQKWnH0bVhEBpNgUawo7nmMMx6MW80Y#scrollTo=ob5gb7chwMNJ)
+
+---
+
+## **4. Engineering and Mission Design**
+
+### Use Cases by Velocity
+
+| Cosmic Velocity | Use Case |
+|------------------|------------------------------|
+| 1st              | Satellite launch (LEO, MEO)  |
+| 2nd              | Planetary missions (Mars, Moon) |
+| 3rd              | Interstellar travel (Voyager, Pioneer) |
+
+### Design Considerations
+
+- **Fuel Efficiency**: Most fuel is spent reaching low orbit. Timing and gravity assists help achieve 2nd/3rd velocities.
+- **Gravity Assists**: Used by *Voyager*, *Cassini*, and *New Horizons* to incrementally achieve solar system escape.
+
+---
+
+## **5. Future Exploration and Cosmic Challenges**
+
+- **Voyager 1** is the only human object beyond the heliopause (~17 km/s).
+- **Interstellar Missions** like *Breakthrough Starshot* aim to reach 0.1c using laser propulsion.
+- **Cosmic Horizons**: Interstellar escape velocities will eventually require non-chemical propulsion—solar sails, nuclear, or antimatter-based tech.
+
+---
+
+## **6. Conclusion**
+
+Cosmic velocities define the very boundary between planetary, interplanetary, and interstellar travel. These are not abstract ideas but the core calculations used to plan every space mission.
+
+From basic orbits to escaping the solar system, this knowledge:
+
+- Guides launch protocols.
+- Optimizes fuel usage.
+- Enables human dreams of interstellar travel.
+
+Space exploration begins not with a rocket launch, but with understanding these fundamental speeds.
