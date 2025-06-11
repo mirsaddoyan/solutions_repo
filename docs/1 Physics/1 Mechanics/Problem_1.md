@@ -209,7 +209,7 @@ plt.legend()
 plt.grid(True)
 plt.show()
 ```
-![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-4.png?raw=true)
+![Example Image](https://github.com/mirsaddoyan/solutions_repo/blob/main/docs/1%20Physics/1%20Mechanics/Unknown-4-2.png?raw=true)
 
 Visit[Colab](https://colab.research.google.com/drive/1IbveeROGuSfvVgSacjFp2BdC1BfIn6ZK#scrollTo=hpRSVGJcORIp)
 
