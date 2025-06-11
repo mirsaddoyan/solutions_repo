@@ -1,184 +1,148 @@
 # Problem 3
-# Escape Velocities and Cosmic Velocities
+## **Trajectories of a Freely Released Payload Near Earth**
 
-## Motivation:
-The concept of **escape velocity** is crucial for understanding the conditions required to leave a celestial body's gravitational influence. Extending this concept, the **first, second, and third cosmic velocities** define the thresholds for orbiting, escaping, and leaving a star system. These principles underpin modern space exploration, from launching satellites to interplanetary missions.
+### **1. Introduction**
 
----
+This project analyzes the trajectories of a freely released payload near Earth, focusing on gravitational forces and initial conditions (velocity, altitude). The goal is to simulate and visualize possible trajectories (elliptical, parabolic, hyperbolic) using Python in Google Colab.
 
-## Task Breakdown
-
-### 1. Defining the First, Second, and Third Cosmic Velocities
-
-#### **Escape Velocity (Second Cosmic Velocity)**
-
-Escape velocity is the minimum velocity an object must have to escape the gravitational pull of a celestial body without further propulsion. It is defined as the velocity at which the **kinetic energy** of the object equals the **gravitational potential energy**.
-
-Mathematically, escape velocity $v_e$ is given by:
-
-$[
-v_e = \sqrt{\frac{2GM}{R}}
-]$
-
-Where:
-- $G$ is the gravitational constant,
-- $M$ is the mass of the celestial body,
-- $R$ is the distance from the center of the celestial body to the object.
-
-Escape velocity is critical for space exploration because it determines the energy required to launch a spacecraft or satellite into space.
-
-#### **First Cosmic Velocity (Orbital Velocity)**
-
-The first cosmic velocity is the velocity an object must have to enter into a stable orbit around a celestial body. This is the velocity at which the **centripetal force** required to maintain an orbit equals the gravitational force acting on the object.
-
-The orbital velocity $v_o$ is given by:
-
-$[
-v_o = \sqrt{\frac{GM}{R}}
-]$
-
-Where:
-- $G$ is the gravitational constant,
-- $M$ is the mass of the celestial body,
-- $R$ is the distance from the center of the celestial body to the orbiting object.
-
-The first cosmic velocity is vital for placing satellites into orbit, as it ensures the object moves fast enough to balance gravitational forces.
-
-#### **Third Cosmic Velocity (Escape from the Solar System)**
-
-The third cosmic velocity is the velocity an object needs to escape the gravitational influence of the Sun (or any star) and move away from the star system indefinitely. This velocity is calculated using the gravitational force of the Sun and takes into account the distance from the object to the Sun.
-
-The third cosmic velocity $v_3$ is given by:
-
-$[
-v_3 = \sqrt{\frac{2GM_{\text{sun}}}{R_{\text{sun}}} + \frac{v_{\text{escape}}^2}{2}}
-]$
-
-Where:
-- $M_{\text{sun}}$ is the mass of the Sun,
-- $R_{\text{sun}}$ is the distance from the Sun to the object,
-- $v_{\text{escape}}$ is the escape velocity at the Earth's surface or any other celestial body in question.
-
-This velocity is essential for interstellar travel or missions that aim to leave the solar system.
+The main challenge is to understand how different initial velocities (ranging from 5 km/s to 13 km/s) influence whether the payload stays in orbit, reenters, or escapes Earth's gravity.
 
 ---
 
-### 2. Mathematical Derivations and Parameters Affecting These Velocities
+## **2. Theoretical Background**
 
-The escape velocities and cosmic velocities depend on the mass $M$ of the celestial body and the distance $R$ from the center of mass to the object. Higher mass and smaller radii lead to higher velocities, meaning it requires more energy to escape from more massive bodies or closer objects.
+### **2.1 Governing Equations**
 
-The **gravitational constant** $G$ remains a constant across calculations, but the mass of the object and the distances to the object play critical roles in calculating these velocities. Therefore, for different planets or celestial bodies, the velocities vary significantly.
+The gravitational force between Earth and the payload is given by:
+
+$$
+F = \frac{GMm}{r^2}
+$$
+
+Where:
+
+* $G$ = Gravitational constant (6.67430 × 10⁻¹¹ m³ kg⁻¹ s⁻²)
+* $M$ = Mass of the Earth (5.972 × 10²⁴ kg)
+* $m$ = Mass of the payload
+* $r$ = Distance from Earth's center to the payload
+
+#### **2.2 Equations of Motion:**
+
+The acceleration acting on the payload is:
+
+$$
+a = \frac{GM}{r^2}
+$$
+
+The second-order differential equation governing the motion is:
+
+$$
+\frac{d^2 \vec{r}}{dt^2} = -\frac{GM}{r^2} \hat{r}
+$$
 
 ---
-
-### 3. Calculating and Visualizing These Velocities for Different Celestial Bodies
-
-We can calculate the first, second, and third cosmic velocities for various celestial bodies, such as **Earth**, **Mars**, and **Jupiter**, using the formulas above.
-
-#### **Python Code for Cosmic Velocities**
-
-Below is the Python code to calculate and visualize the escape velocities and cosmic velocities for Earth, Mars, and Jupiter:
+## **3. Simulation Code**
 
 ```python
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Constants
-G = 6.67430e-11  # Gravitational constant in m^3 kg^-1 s^-2
-
-# Masses and radii of celestial bodies (in SI units)
-celestial_bodies = {
-    'Earth': {'M': 5.972e24, 'R': 6.371e6},
-    'Mars': {'M': 6.4171e23, 'R': 3.3962e6},
-    'Jupiter': {'M': 1.8982e27, 'R': 6.991e7},
-}
-
-# Function to calculate the first and second cosmic velocities
-def cosmic_velocities(M, R):
-    v1 = np.sqrt(G * M / R)  # First cosmic velocity (orbital velocity)
-    v2 = np.sqrt(2 * G * M / R)  # Second cosmic velocity (escape velocity)
-    return v1, v2
-
-# Calculate velocities for each celestial body
-velocities = {}
-for body, values in celestial_bodies.items():
-    v1, v2 = cosmic_velocities(values['M'], values['R'])
-    velocities[body] = {'v1': v1, 'v2': v2}
-
-# Plotting the velocities
-labels = list(celestial_bodies.keys())
-v1_values = [velocities[body]['v1'] for body in labels]
-v2_values = [velocities[body]['v2'] for body in labels]
-
-x = np.arange(len(labels))
-
-fig, ax = plt.subplots(figsize=(10, 6))
-
-bar_width = 0.35
-ax.bar(x - bar_width/2, v1_values, bar_width, label='First Cosmic Velocity (Orbital)', color='b')
-ax.bar(x + bar_width/2, v2_values, bar_width, label='Second Cosmic Velocity (Escape)', color='r')
-
-ax.set_xlabel('Celestial Bodies')
-ax.set_ylabel('Velocity (m/s)')
-ax.set_title('First and Second Cosmic Velocities for Different Celestial Bodies')
-ax.set_xticks(x)
-ax.set_xticklabels(labels)
-ax.legend()
-
-plt.tight_layout()
+plt.figure(figsize=(8, 8))
+plt.plot(trajectory[:, 0], trajectory[:, 1], label="Payload Trajectory")
+earth = plt.Circle((0, 0), R_earth, color='blue', alpha=0.5, label='Earth')
+plt.gca().add_patch(earth)
+plt.gca().set_aspect('equal')
+plt.xlabel('x (m)')
+plt.ylabel('y (m)')
+plt.title('Trajectory of Released Payload Near Earth')
+plt.legend()
+plt.grid(True)
 plt.show()
 ```
-[Colab](https://colab.research.google.com/drive/1YeT0Dqua7RCqWjgrzE43nqNaLbTKGAXo?authuser=1)
+Visit: [Colab](https://colab.research.google.com/drive/1tmNx00N0d6ZO2M9a7sIeov0q_ArNJI7H#scrollTo=D2oE4rHnG28i)
 
-![Example Image](https://github.com/mirsaddoyan/solutions_repo/blob/main/docs/1%20Physics/2%20Gravity/Unknown-12.png?raw=true)
-
----
-### 4. Importance in Space Exploration
-
-#### **Launching Satellites and Spacecrafts**
-Understanding escape and orbital velocities is critical for launching satellites. The **first cosmic velocity** ensures that satellites remain in stable orbits around Earth, allowing them to maintain a consistent path without falling back to the planet's surface. The **second cosmic velocity** is necessary for launching spacecraft that need to escape Earth's gravitational influence and travel into space.
-
-For instance, when sending satellites to low Earth orbit (LEO), they must reach the first cosmic velocity, which ensures they remain in orbit. For missions that aim to go beyond Earth's orbit, such as interplanetary missions to Mars or beyond, the second cosmic velocity is required to escape Earth's gravity.
-
-#### **Missions to Other Planets**
-For interplanetary missions, spacecraft must reach **escape velocity** to leave Earth's gravity well and then navigate towards other planets. After escaping Earth's gravitational field, spacecraft will use the gravitational forces of other planets to adjust their trajectory or speed (via gravity assists). 
-
-For example, the **Mars Rover missions** require spacecraft to escape Earth's gravity (second cosmic velocity) to head towards Mars. Similarly, for probes like Voyager, the **third cosmic velocity** is needed to leave the solar system entirely.
-
-#### **Interstellar Travel**
-The **third cosmic velocity** represents the velocity required for interstellar travel, allowing spacecraft to break free from the Sun's gravity and travel to other star systems. While current technology does not allow us to achieve this velocity, understanding it is fundamental for future space exploration.
-
-This velocity, calculated for a spacecraft at the Earth's surface, is approximately 16.7 km/s, significantly higher than the velocities needed for orbital or escape purposes. While still beyond current technology, efforts like **breakthrough propulsion** (e.g., light sails or ion drives) are being researched to achieve the high speeds required for interstellar missions.
-
----
-
-### 5. Graphical Representations
-
-The following bar graph visualizes the **first and second cosmic velocities** for **Earth**, **Mars**, and **Jupiter**. This representation allows us to understand how these velocities vary across different celestial bodies:
-
-- **Jupiter** has the highest escape and orbital velocities due to its larger mass and size compared to Earth and Mars.
-- **Mars** has the lowest velocities because of its smaller mass and radius in comparison to Earth and Jupiter.
-- **Earth** provides an intermediate set of velocities, making it the baseline for most space missions.
-
-#### **Graph Interpretation**
-From the graph, we observe the following trends:
-- The escape velocity (second cosmic velocity) is always greater than the orbital velocity (first cosmic velocity) for all bodies.
-- Larger planets like Jupiter require higher velocities to escape their gravitational fields compared to smaller planets like Mars.
-
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/2%20Gravity/Unknown-300.png?raw=true)
 
 ---
 
 
-### Conclusion
+## **4. Animation Code**
 
-The concept of **escape velocity** and the **first, second, and third cosmic velocities** is essential for understanding the physics of space exploration. By calculating and visualizing these velocities, we gain insights into the challenges of launching spacecraft, sending probes to distant planets, and contemplating future interstellar travel. These velocities determine the energy required to launch missions into orbit, escape planetary gravity, and venture beyond our Solar System.
+```python
+fig, ax = plt.subplots(figsize=(8, 8))
+ax.set_xlim(-2*R_earth, 2*R_earth)
+ax.set_ylim(-2*R_earth, 2*R_earth)
+ax.set_aspect('equal')
+ax.set_title("Payload Trajectory Animation")
 
+earth = plt.Circle((0, 0), R_earth, color='blue', alpha=0.5)
+payload, = ax.plot([], [], 'ro', markersize=4)
+path, = ax.plot([], [], 'r-', linewidth=1)
+
+ax.add_patch(earth)
+
+def init():
+    payload.set_data([], [])
+    path.set_data([], [])
+    return payload, path
+
+def update(frame):
+    payload.set_data([trajectory[frame, 0]], [trajectory[frame, 1]]) # Fix: Pass sequences
+    path.set_data(trajectory[:frame+1, 0], trajectory[:frame+1, 1])
+    return payload, path
+
+ani = FuncAnimation(fig, update, frames=len(trajectory), init_func=init,
+                    blit=True, interval=30)
+
+HTML(ani.to_jshtml())
+```
+Visit: [Colab](https://colab.research.google.com/drive/1tmNx00N0d6ZO2M9a7sIeov0q_ArNJI7H#scrollTo=D2oE4rHnG28i)
+
+```python
+fig, ax = plt.subplots(figsize=(10, 10))
+
+# Earth
+earth = plt.Circle((0, 0), R_earth, color='blue', alpha=0.4, label='Earth')
+ax.add_patch(earth)
+
+# Trajectories
+for (v_kms, traj), color in zip(trajectories, colors):
+    if traj.shape[0] > 0:
+        ax.plot(traj[:, 0], traj[:, 1], color=color, label=f"{v_kms:.1f} km/s")
+
+# Initial position marker
+ax.plot(r0[0], r0[1], 'ro', label="Launch Point")
+
+# Formatting
+ax.set_title("Trajectories from 800 km Altitude for Various Velocities")
+ax.set_xlabel("x (m)")
+ax.set_ylabel("y (m)")
+ax.set_aspect('equal')
+ax.set_xlim(-2*R_earth, 2*R_earth)
+ax.set_ylim(-2*R_earth, 2*R_earth)
+ax.grid(True)
+ax.legend(loc='upper right')
+plt.show()
+```
+Visit: [Colab](https://colab.research.google.com/drive/1tmNx00N0d6ZO2M9a7sIeov0q_ArNJI7H#scrollTo=D2oE4rHnG28i)
+
+![Example Image](https://github.com/tugcecicekli/solutions_repo/blob/main/docs/1%20Physics/2%20Gravity/Unknown-301png.png?raw=true)
 
 ---
 
-### **Summary:**
-- **Task 1:** Define and explain the first, second, and third cosmic velocities, with their respective mathematical formulations.
-- **Task 2:** Discuss the factors that affect these velocities, such as mass and radius of celestial bodies.
-- **Task 3:** Provide Python code to calculate and visualize the first and second cosmic velocities for Earth, Mars, and Jupiter.
-- **Task 4:** Explain the importance of these velocities in space exploration, particularly for satellite launches, planetary missions, and interstellar travel.
+### **5. Discussion**
 
+1. **Orbital and Escape Dynamics:**
+
+   * Velocities below 7.9 km/s result in elliptical orbits.
+   * Velocities around 11.2 km/s result in parabolic trajectories (escape).
+   * Velocities above 11.2 km/s show hyperbolic escape trajectories.
+
+2. **Real-World Applications:**
+
+   * Satellite launches: Achieving stable orbits with minimum energy.
+   * Reentry planning: Calculating safe descent paths.
+   * Space missions: Determining escape velocities for interplanetary travel.
+
+---
+
+### **6. Conclusion**
+
+By simulating trajectories with varying initial velocities, we demonstrate the critical role of initial speed in determining whether the payload remains bound to Earth or escapes into space. The graphical and animated representations provide a clear visualization of these dynamics.
